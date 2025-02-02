@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-listener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todos-listener
+  template:
+    metadata:
+      labels:
+        app: todos-listener
+    spec:
+      containers:
+        - name: todos-listener
+          image: eliyait/todos-listener
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 2500
+          envFrom:
+            - configMapRef:
+                name: db-config
+          env:
+            - name: AWS_SQS_TODOS_QUEUE
+              value: "https://sqs.us-east-1.amazonaws.com/559050218225/TodosQueue"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: accessKeyId
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secretAccessKey
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-secret
+            - name: PGUSER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGUSER
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGHOST
+            - name: PGDB
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGDB
+
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGPORT

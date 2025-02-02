@@ -1,0 +1,47 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: eliyait/taskly-client
+      context: services/client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: eliyait/tasks
+      context: services/tasks
+      docker:
+        dockerfile: Dockerfile.service
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: eliyait/todos-listener
+      context: services/tasks
+      docker:
+        dockerfile: Dockerfile.listener
+    - image: eliyait/taskly-users
+      context: services/users
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+
+    - image: eliyait/taskly-notifications
+      context: services/notifications
+      docker:
+        dockerfile: Dockerfile.service
+    - image: eliyait/taskly-notifications-dlq
+      context: services/notifications
+      docker:
+        dockerfile: Dockerfile.dlq

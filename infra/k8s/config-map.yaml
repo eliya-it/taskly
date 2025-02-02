@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-env-vars
+  labels:
+    app: common-env-vars
+data:
+  AWS_REGION: "us-east-1"
+  AWS_SNS_TOPIC_ARN_USEREVENTS: "arn:aws:sns:us-east-1:559050218225:UserEvents"
+  AWS_SNS_TOPIC_ARN_TODOEVENTS: "arn:aws:sns:us-east-1:559050218225:TodoEvents"
+  AWS_SNS_TOPIC_USEREVENTS: "USER_EVENTS"
+  AWS_SNS_TOPIC_TODOEVENTS: "TodoEvents"
+  AWS_NOTIFICATIONS_QUEUE_URL: "https://sqs.us-east-1.amazonaws.com/559050218225/NotificationsQueue"
+  AWS_NOTIFICATIONS_DLQ_URL: "https://sqs.us-east-1.amazonaws.com/559050218225/NotificationsDLQ"
+  AWS_TODOS_QUEUE_URL: "https://sqs.us-east-1.amazonaws.com/559050218225/TodosQueue"

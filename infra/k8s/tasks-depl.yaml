@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tasks
+  template:
+    metadata:
+      labels:
+        app: tasks
+    spec:
+      containers:
+        - name: tasks
+          image: eliyait/tasks
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          envFrom:
+            - configMapRef:
+                name: db-config
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: accessKeyId
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secretAccessKey
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-secret
+            - name: PGUSER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGUSER
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGHOST
+            - name: PGDB
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGDB
+
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGPORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks-srv
+spec:
+  selector:
+    app: tasks
+  ports:
+    - name: tasks
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

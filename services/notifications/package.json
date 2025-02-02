@@ -1,0 +1,33 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "NODE_ENV=development ts-node --transpile-only app.ts",
+    "start": "NODE_ENV=production node dist/app.js",
+    "dev:dlq": "NODE_ENV=development ts-node --transpile-only events/dlq/dlq.ts",
+    "dlq": "NODE_ENV=production node dist/events/dlq/dlq.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.731.1",
+    "@taskly/shared": "^1.0.154",
+    "aws-sdk": "^2.1692.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "@types/nodemon": "^1.19.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/nodemailer": "^6.4.17"
+  }
+}

@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: eliyait/taskly-users
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          envFrom:
+            - configMapRef:
+                name: db-config
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: accessKeyId
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secretAccessKey
+
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-vars
+                  key: AWS_REGION
+            - name: AWS_SNS_TOPIC_ARN_USEREVENTS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-env-vars
+                  key: AWS_SNS_TOPIC_ARN_USEREVENTS
+
+            - name: PGUSER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGUSER
+            - name: PGHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGHOST
+            - name: PGDB
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGDB
+
+            - name: PGPORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: PGPORT
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-secret
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+            - name: "DB"
+              value: "postgres://postgres:amsq9367@localhost:5432/taskly"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-srv
+spec:
+  selector:
+    app: users
+  ports:
+    - name: users
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

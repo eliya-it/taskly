@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-dlq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-dlq
+  template:
+    metadata:
+      labels:
+        app: notifications-dlq
+    spec:
+      containers:
+        - name: notifications-dlq
+          image: eliyait/taskly-notifications-dlq
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 2500
+          envFrom:
+            - configMapRef:
+                name: common-env-vars
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: accessKeyId
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: secretAccessKey

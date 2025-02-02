@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: taskly.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/api/todos"
+            backend:
+              service:
+                name: tasks-srv
+                port:
+                  number: 4000
+          - pathType: Prefix
+            path: "/api/users"
+            backend:
+              service:
+                name: users-srv
+                port:
+                  number: 5000
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 5173
