@@ -7,7 +7,6 @@ import React, {
   Dispatch,
 } from "react";
 import useFetch from "../hooks/useFetch";
-import { useNavigate } from "react-router";
 
 export interface User {
   id: string;
@@ -32,7 +31,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data, error, fetchData } = useFetch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const validateToken = async () => {
@@ -46,10 +44,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const { token } = storedUser;
 
       if (token) {
-        fetchData("/users/validateToken", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        fetchData(
+          "/users/validateToken",
+          {
+            method: "GET",
+          },
+          true
+        );
       } else {
         setUser(null);
         setIsLoading(false);

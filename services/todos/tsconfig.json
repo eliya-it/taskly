@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "strictPropertyInitialization": false,
+    "typeRoots": ["./node_modules/@types", "./"]
+  },
+  "include": ["./src/types/global.d.ts", "./src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

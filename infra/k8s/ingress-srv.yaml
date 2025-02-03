@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-srv
+  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
@@ -30,4 +31,4 @@ spec:
               service:
                 name: client-srv
                 port:
-                  number: 5173
+                  number: 80

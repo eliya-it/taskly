@@ -3,7 +3,7 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      - "infra/k8s/*.yaml" # Ensure this path is correct and points to valid files
 build:
   local:
     push: false
@@ -17,7 +17,7 @@ build:
           - src: "src/**/*.js"
             dest: .
     - image: eliyait/tasks
-      context: services/tasks
+      context: services/todos
       docker:
         dockerfile: Dockerfile.service
       sync:
@@ -25,7 +25,7 @@ build:
           - src: "src/**/*.js"
             dest: .
     - image: eliyait/todos-listener
-      context: services/tasks
+      context: services/todos
       docker:
         dockerfile: Dockerfile.listener
     - image: eliyait/taskly-users
@@ -36,7 +36,6 @@ build:
         manual:
           - src: "src/**/*.js"
             dest: .
-
     - image: eliyait/taskly-notifications
       context: services/notifications
       docker:

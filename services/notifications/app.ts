@@ -1,4 +1,4 @@
-import NotificationsListener from "./events/notificationsListener";
+import NotificationsListener from "./src/events/notificationsListener";
 
 // Helper function to pause execution for a specified time
 const sleep = (ms: number): Promise<void> =>

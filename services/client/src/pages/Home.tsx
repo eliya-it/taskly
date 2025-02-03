@@ -5,7 +5,7 @@ import CreateTodo from "../components/CreateTodo";
 import Navbar from "../components/Navbar";
 
 const Home: FunctionComponent = () => {
-  const { data: todos, error, isLoading, fetchData } = useFetch();
+  const { data: todos, error, fetchData } = useFetch();
 
   const fetchTodos = async (): Promise<void> => {
     await fetchData("/todos/", { method: "GET" }, true);

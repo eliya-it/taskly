@@ -15,7 +15,7 @@ const CreateTodo: FunctionComponent<Props> = ({ refreshTodos }) => {
     e.preventDefault();
 
     try {
-      const response = await fetchData(
+      await fetchData(
         "/todos",
         {
           method: "POST",

@@ -1,0 +1,17 @@
+{
+  "family": "todo-listener-task",
+  "containerDefinitions": [
+    {
+      "name": "todo-listener",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/todo-listener:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/ecsTaskExecutionRole"
+}

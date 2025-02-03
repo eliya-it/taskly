@@ -1,0 +1,23 @@
+{
+  "family": "todo-service-task",
+  "containerDefinitions": [
+    {
+      "name": "todo-service",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/todo-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 4000,
+          "hostPort": 4000
+        }
+      ]
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/ecsTaskExecutionRole"
+}

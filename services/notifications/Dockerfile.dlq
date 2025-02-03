@@ -1,32 +1,21 @@
-# Stage 1: Build environment
-# Use the latest Node image to install dependencies and build the app
+
 FROM node:19 AS build
 
-# Set working directory in the container
 WORKDIR /app
 
-# Copy package.json and lock file to install dependencies
 COPY package*.json ./
 
-# Install dependencies based on package.json
 RUN npm install
 
-# Copy the rest of the application files
 COPY . .
-
-
-# Stage 2: Production environment
-# Use a lighter Node Alpine image for a lean final container
+RUN npm run build
 FROM node:19-alpine
 
-# Set working directory again for consistency
 WORKDIR /app
 
-# Copy the necessary files from the build stage to the production stage
 COPY --from=build /app .
 
-# Expose the application’s port
+
 EXPOSE 5000
 
-# Start the application
-CMD ["npm", "run","dev:dlq"]
+CMD ["npm", "run","dlq"]

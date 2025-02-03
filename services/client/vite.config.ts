@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    allowedHosts: ["taskly.com"],
+    host: "taskly.com", // Allows binding to this hostname
+    cors: true,
   },
 });

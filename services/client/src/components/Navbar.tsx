@@ -1,10 +1,8 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 
-type NavbarProps = {};
-
-const Navbar: React.FC<NavbarProps> = () => {
+const Navbar: FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logout } = useLogout();
   const logoutHandler = function (e: FormEvent) {
@@ -18,12 +16,6 @@ const Navbar: React.FC<NavbarProps> = () => {
         <span className="text-yellow-500">ly</span>
       </Link>
       <div className="md:flex hidden space-x-4">
-        <Link
-          to="/todos"
-          className="text-sm font-medium hover:text-blue-500 transition duration-300"
-        >
-          Todos
-        </Link>
         <button
           className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition duration-300 shadow-md"
           onClick={logoutHandler}
