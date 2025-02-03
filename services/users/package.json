@@ -7,14 +7,14 @@
     "start": "NODE_ENV=production node dist/index.js",
     "dev": "NODE_ENV=development ts-node --transpile-only index.ts",
     "listener": "NODE_ENV=production node dist/events/todosListener.js",
-    "test": "NODE_ENV=test jest --watchAll --no- cache",
+    "test": "NODE_ENV=test jest --watchAll --no-cache",
     "test:ci": "jest"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
-      "<rootDir>/test/setup.ts"
+      "<rootDir>/src/test/setup.ts"
     ]
   },
   "keywords": [],
@@ -23,7 +23,7 @@
   "description": "",
   "dependencies": {
     "@aws-sdk/client-sns": "^3.731.1",
-    "@taskly/shared": "^1.0.187",
+    "@taskly/shared": "^1.0.201",
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",

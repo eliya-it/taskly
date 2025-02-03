@@ -1,7 +1,7 @@
 import { restoreAWSMocks } from "../../test/__mocks__/awsMock";
 
 import request from "supertest";
-import { app } from "../../app";
+import { app } from "../../../app";
 import AWS from "aws-sdk";
 import { sequelize } from "../../models/userModel";
 

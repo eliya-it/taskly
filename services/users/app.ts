@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import AWS from "aws-sdk";
-import router from "./routes/router";
+import router from "./src/routes/router";
 import { errorController } from "@taskly/shared";
 import cookieSession from "cookie-session";
 import rateLimit from "express-rate-limit";

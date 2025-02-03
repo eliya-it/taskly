@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { ensureUsersTableExist } from "./utils/db";
+import { ensureUsersTableExist } from "./src/utils/db";
 
 const port = 5000;
 app.listen(port, async () => {
