@@ -1,8 +1,8 @@
 {
-  "family": "client-ui-task",
+  "family": "client-task",
   "containerDefinitions": [
     {
-      "name": "client-ui",
+      "name": "client",
       "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/client-service:latest",
       "memory": 512,
       "cpu": 256,

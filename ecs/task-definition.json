@@ -1,0 +1,64 @@
+{
+  "family": "taskly-task",
+  "containerDefinitions": [
+    {
+      "name": "user-service",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/user-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [{ "containerPort": 3000, "hostPort": 3000 }]
+    },
+    {
+      "name": "client",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/client-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [{ "containerPort": 5000, "hostPort": 5000 }]
+    },
+    {
+      "name": "notification-service",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/notification-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [{ "containerPort": 4001, "hostPort": 4001 }],
+      "environment": [
+        { "name": "AWS_REGION", "value": "us-east-1" },
+        {
+          "name": "SQS_QUEUE_URL",
+          "value": "https://sqs.<AWS_REGION>.amazonaws.com/<YOUR_AWS_ACCOUNT_ID>/notification-queue"
+        }
+      ]
+    },
+    {
+      "name": "notification-dlq-service",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/notification-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [{ "containerPort": 3000, "hostPort": 3000 }]
+    },
+    {
+      "name": "todo-listener",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/todo-listener:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true
+    },
+    {
+      "name": "todo-service",
+      "image": "<YOUR_AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/todo-service:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [{ "containerPort": 4000, "hostPort": 4000 }]
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "2048",
+  "memory": "4096",
+  "executionRoleArn": "arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/ecsTaskExecutionRole"
+}
